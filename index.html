@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <script src="library.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="inputSide">
+        <div class="inputCard">
+            <header>Enter Book</header>
+            <form class="formContainer">
+                <div class="formContainerIndividual">
+                    <label for="title">Title</label>
+                    <input  type="text"
+                            id="title"
+                            name="title"
+                            placeholder="Lord of the Flies"
+                            required>
+
+                </div>
+                <div class="formContainerIndividual">
+                    <label for="author">Author</label>
+                    <input  type="text"
+                            id="author"
+                            name="author"
+                            placeholder="William Golding">
+                    
+                </div>
+                <div class="formContainerIndividual">
+                    <label for="pages">Pages</label>
+                    <input  type="number"
+                            id="pages"
+                            name="pages"
+                            placeholder="225">
+                    
+                </div>
+                <div class="formContainerIndividual">
+                    <label for="readIt">Have you read this book?</label>
+                    <select id="readIt" name="readIt">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="outputSide">
+
+    </div>
+</body>
+</html>
