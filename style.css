@@ -2,7 +2,7 @@
     border: 0px;
     margin: 0px;
     padding: 0px;
-    font-family: sans-serif;
+    font-family: 'Quicksand', sans-serif;
 }
 
 body{
@@ -13,48 +13,51 @@ body{
 /* INPUT SIDE */
 .inputSide{
     flex: 0 0 40%;
-    background-color: gray;
+    background: rgb(219, 219, 219);
     height: 100vh;
     display: flex;
+    box-shadow: 10px 10px 10px black;
 }
 .inputSide .inputCard{
-    background-color: #8ee3f5;
-    border-radius: 10px;
+    background-color: #ffffffbc;
+    box-shadow: inset 0px 1px 1px rgba(60, 60, 60, 0.537),
+                inset 0px -1px 0px rgba(60, 60, 60, 0.537);
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
     margin: auto;
     height: 50%;
-    width: 80%;
+    width: 100%;
     display:flex;
     flex-direction: column;
-    box-shadow: 2px 2px 2px 0px rgba(55, 55, 55, 0.803);
-    border: 2px solid black;
 }
-.inputCard header{
-    border: 2px solid black;
-    flex: 0 0 20%;
+.inputCard .inputCardHeader{
+    flex: 0 0 15%;
+    font-weight: 500;
     margin: auto;
-    color: White;
+    color: black;
     font-size: 50px;
 }
-.inputCard .formContainer{
-    flex: 0 0 80%;
+.inputCard .inputCardMain{
+    flex: 1;
     margin: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5%;
-    border-radius: 10px;   
+    gap: 10%;  
 }
-.formContainerIndividual{
-    padding: 5px;
+
+.formContainer{
+    padding: 3px;
     background-color: white;
-    box-shadow: inset 2px 2px 2px black;
-    width: 80%;
+    box-shadow: inset 0px 1px 1px rgba(65, 65, 65, 0.616);
+    width: 70%;
+    border-radius: 5px;
 }
 
 input, select{
-    height: 50px;
+    height: 30px;
 }
 input{
     width: 200px;
@@ -62,9 +65,36 @@ input{
 select{
     width: 50px;
 }
+.inputCard .inputCardButton{
+    flex: 0 0 15%;
+    height: 50px;
+    display: 0 0 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+}
+button:hover{
+    transform: scale(1.05);
+    background-color: aquamarine;
+    transition: .25s;
+    color: black;
+    font-weight: 600;
+}
+button:active{
+    transform: scale(.98);
+    background-color: aquamarine;
+    transition: .25s;
+}
+
+
 /* OUTPUT SIDE */ 
 .outputSide{
     flex: 1;
-    background-color: aqua;
+    background-color:#93ddff;
     height: 100vh;
 }
