@@ -12,30 +12,29 @@ body{
 
 /* INPUT SIDE */
 .inputSide{
-    flex: 0 0 40%;
-    background: rgb(219, 219, 219);
+    padding-left: 3%;
+    flex: 0 0 35%;
+    background: #f8f8f8;
     height: 100vh;
     display: flex;
     box-shadow: 10px 10px 10px black;
 }
 .inputSide .inputCard{
-    background-color: #ffffffbc;
-    box-shadow: inset 0px 1px 1px rgba(60, 60, 60, 0.537),
-                inset 0px -1px 0px rgba(60, 60, 60, 0.537);
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
     margin: auto;
     height: 50%;
     width: 100%;
     display:flex;
     flex-direction: column;
+    align-items: left;
+
 }
 .inputCard .inputCardHeader{
     flex: 0 0 15%;
     font-weight: 500;
-    margin: auto;
     color: black;
     font-size: 50px;
+    align-items: left;
+    justify-content: left;
 }
 .inputCard .inputCardMain{
     flex: 1;
@@ -44,7 +43,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: left;
     gap: 10%;  
 }
 
@@ -70,8 +69,8 @@ select{
     height: 50px;
     display: 0 0 20%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
 }
 button{
     height: 40px;
