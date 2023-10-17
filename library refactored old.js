@@ -83,15 +83,11 @@ function addDeleteButtonToCard(){
     bookCardDeleteButton.classList.add('deleteButton');
     bookCard.appendChild(bookCardDeleteButton);
     bookCardDeleteButton.innerText = "Remove";
-    bookCardDeleteButton.addEventListener("click", ()=> {
-        bookCardDeleteButton.parentNode.remove();
-    })
 }
 let tester = 0
 function addDeleteButtonFunctionality(){
     let allDeleteButtons = document.querySelectorAll(".deleteButton");
     allDeleteButtons.forEach((button) => {
-        button.removeEventListener("click");
         button.addEventListener("click", () => {
             console.log("library length: " + library.length);
             console.log(tester);
@@ -105,8 +101,8 @@ function addDeleteButtonFunctionality(){
                     libraryIndex = i;
                 }
             }
-            library.splice(libraryIndex, 1); */
-            button.parentNode.remove(); 
+            library.splice(libraryIndex, 1);
+            button.parentNode.remove(); */
         })
     })
 }
@@ -118,5 +114,7 @@ buttonAddNewBook.addEventListener('click', () => {
     createBookCard();
     addBookObjectDataToBookCard();
     addDeleteButtonToCard();
+    addDeleteButtonFunctionality();
     incrementBookIDNumber();
+    console.log(library);
 });

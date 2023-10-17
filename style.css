@@ -59,6 +59,7 @@ input, select{
 }
 input{
     width: 100%;
+    border-bottom: 3px solid white;
 }
 
 input:focus, 
