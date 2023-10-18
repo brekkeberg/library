@@ -12,20 +12,17 @@ body{
 
 /* INPUT SIDE */
 .inputSide{
-    padding-left: 3%;
-    padding-top: 3%;
-    flex: 0 0 35%;
+    width: 30vw;
     background: #f8f8f8;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 .inputSide .inputCard{
-
-    height: 50%;
-    width: 100%;
+    border: 1px solid black;
     display:flex;
     flex-direction: column;
     align-items: left;
-
 }
 .inputCard .inputCardHeader{
     flex: 0 0 15%;
@@ -37,22 +34,39 @@ body{
 }
 .inputCard .inputCardMain{
     flex: 1;
-    margin: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: left;
-    gap: 10%;  
 }
 
 .formContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 3px;
     background-color: white;
     width: 70%;
     border-bottom: 1px solid black;
+    justify-content: left;
+    align-items: left;
 }
 
+ .inputCardMain #checkboxContainer{
+    border-bottom: 0px;
+    background-color: #f8f8f8;
+    display: flex;
+}
+
+.inputCardMain #checkboxContainer label{
+    font-size: 17px;
+    flex: 0 0 85%;
+    margin: auto;
+}
+
+.inputCardMain #checkboxContainer input{
+    flex: 1;
+    font-size: 17px;
+}
 
 input, select{
     height: 30px;
@@ -67,7 +81,6 @@ input:hover{
     outline:  none;
     border-bottom: 3px solid orange;
     transition: all .2s;
-    
 }
 
 select{
@@ -92,6 +105,7 @@ button:hover{
     transition: .25s;
     color: black;
     font-weight: 600;
+    cursor: pointer;
 }
 button:active{
     transform: scale(.98);
@@ -102,7 +116,7 @@ button:active{
 
 /* OUTPUT SIDE */ 
 .outputSide{
-    flex: 0 0 65%;
+    width: 70vw;
     background: rgb(34,193,195);
     background: linear-gradient(117deg, rgba(34,193,195,1) 0%, rgba(143,193,242,1) 100%);
     height: 100vh;
@@ -127,4 +141,25 @@ button:active{
     margin: 3px;
     border: 0px;
     text-align: center;
+}
+
+.readStatusContainer:hover{
+    cursor: pointer;
+}
+
+#titleContainer{
+    font-size: 30px;
+    font-weight: 700;
+}
+#authorContainer{
+    font-size: 18px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+#pagesContainer{
+    font-size: 16px;
+}
+
+#readStatusContainer{
+    font-size: 20px;
 }

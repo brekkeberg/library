@@ -23,6 +23,20 @@ class Book {
     }
 }
 
+Book.prototype.toggleReadStatus = function(){
+    readStatusContainer.addEventListener('click', ()=>{
+        console.log("WORKS")
+        let currentBookID = readStatusContainer.parentNode.dataset.id;
+            index = locateIndexInLibraryArray(currentBookID);
+            if (libraryArray[index].readStatus == true){
+                libraryArray[index].readStatus = false
+            } else {
+                libraryArray[index].readStatus = true
+            }
+    })
+}
+
+
 function createBook(){
     newBook = new Book( title = formInputTitle.value,
                         author = formInputAuthor.value,
@@ -30,16 +44,14 @@ function createBook(){
                         readStatus = formInputReadStatus.checked,
                         bookID = libraryArray.length,
                         );
+    
 }
 
 function addBookToLibraryArray(){
     libraryArray.push(newBook);
 }
 
-function createBookCard(book){
-
-    // create Book Card
-
+function renderBookCard(){
     bookCard = document.createElement('div');
     bookCard.style.cssText =   "background-color: white;" +
                                 "box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;" +
@@ -57,38 +69,21 @@ function createBookCard(book){
     bookCard.appendChild(pagesContainer);
     bookCard.appendChild(readStatusContainer);
 
-    readStatusContainer.setAttribute('class','readStatusContainer');
-    readStatusContainer.setAttribute('id','readStatusContainer');
-    titleContainer.setAttribute('id', 'titleContainer')
-    authorContainer.setAttribute('id', 'authorContainer')
-    pagesContainer.setAttribute('id', 'pagesContainer')
+    readStatusContainer.classList.add('readStatusContainer');
+    newBook.toggleReadStatus();
+}
 
-    // add Data to bookCard
-
+function addBookObjectDataToBookCard(book){
     titleContainer.innerText = book.title;
     authorContainer.innerText = book.author;
     if (book.pages != ""){
-        pagesContainer.innerText = book.pages + " pages";
+        pagesContainer.innerText =  "Pages: " + book.pages;
     }
     if (book.readStatus == true){
-        readStatusContainer.innerHTML = "<span>read:  <span class='material-symbols-outlined'>task_alt</span></span>"
+        readStatusContainer.innerHTML = "<span class='material-symbols-outlined'>check_circle</span>"
     } else{
-        readStatusContainer.innerHTML = "<span>read:  <span class='material-symbols-outlined'>cancel</span></span>"
+        readStatusContainer.innerHTML = "<span class='material-symbols-outlined'>cancel</span>"
     }
-
-    // give toggle functionality to readStatus icon
-
-    readStatusContainer.addEventListener('click', ()=>{
-        let currentBookID = readStatusContainer.parentNode.dataset.id;
-            index = locateIndexInLibraryArray(currentBookID);
-            if (libraryArray[index].readStatus == true){
-                libraryArray[index].readStatus = false
-            } else {
-                libraryArray[index].readStatus = true
-            }
-        clearAllCards();
-        displayLibrary();
-    })
 }
 
 function assignDataAttributeToBookCard(book){
@@ -130,10 +125,10 @@ function clearAllCards(){
 
 function displayLibrary(){
     for (let i = 0; i < libraryArray.length; i++){
-        createBookCard(libraryArray[i]);
+        renderBookCard();
+        addBookObjectDataToBookCard(libraryArray[i]);
         assignDataAttributeToBookCard(libraryArray[i]);
         addDeleteButtonToCard();
-        console.table(libraryArray);
     }
 }
 
@@ -148,7 +143,7 @@ buttonAddNewBook.addEventListener('click', () => {
     addBookToLibraryArray();
     clearAllCards();
     displayLibrary();
-    clearForm();
+    clearForm(); 
 });
 
 
