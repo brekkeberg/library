@@ -1,7 +1,7 @@
 const formInputTitle = document.querySelector("#title");
 const formInputAuthor = document.querySelector("#author");
 const formInputPages = document.querySelector("#pages");
-const formInputReadStatus = document.querySelector("#readIt");
+const formInputReadStatus = document.querySelector("#isRead");
 const buttonAddNewBook = document.querySelector("#buttonSubmit");
 const outputSide = document.querySelector(".outputSide")
 
@@ -27,34 +27,13 @@ function createBook(){
     newBook = new Book( title = formInputTitle.value,
                         author = formInputAuthor.value,
                         pages = formInputPages.value,
-                        readStatus = formInputReadStatus.value,
+                        readStatus = formInputReadStatus.checked,
                         bookID = libraryArray.length,
                         );
 }
 
 function addBookToLibraryArray(){
     libraryArray.push(newBook);
-}
-
-function clearAllCards(){
-    while (outputSide.firstChild) {
-        outputSide.removeChild(outputSide.firstChild);
-      }
-}
-
-function displayLibrary(){
-    for (let i = 0; i < libraryArray.length; i++){
-        renderBookCard();
-        addBookObjectDataToBookCard(libraryArray[i]);
-        assignDataAttributeToBookCard(libraryArray[i]);
-        addDeleteButtonToCard();
-    }
-}
-
-function clearForm(){
-    formInputTitle.value = "";
-    formInputAuthor.value = "";
-    formInputPages.value = "";
 }
 
 function renderBookCard(){
@@ -82,7 +61,7 @@ function addBookObjectDataToBookCard(book){
     if (book.pages != ""){
         pagesContainer.innerText =  "Pages: " + book.pages;
     }
-    if (book.readStatus === "Yes"){
+    if (book.readStatus == true){
         readStatusContainer.innerHTML = "<span class='material-symbols-outlined'>check_circle</span>"
     } else{
         readStatusContainer.innerHTML = "<span class='material-symbols-outlined'>cancel</span>"
@@ -108,10 +87,6 @@ function addDeleteButtonToCard(){
     })
 }
 
-function toggleReadStatus(){
-
-}
-
 function locateIndexInLibraryArray(currentBookID){
     let index;
     for (let i = 0; i < libraryArray.length; i++){
@@ -123,12 +98,49 @@ function locateIndexInLibraryArray(currentBookID){
     return index;
 }
 
+function toggleReadStatus(){
+    readStatusContainer.addEventListener('click', ()=>{
+        let currentBookID = readStatusContainer.parentNode.dataset.id;
+        index = locateIndexInLibraryArray(currentBookID);
+        if (libraryArray[index].readStatus == true){
+            libraryArray[index].readStatus = false
+        } else {
+            libraryArray[index].readStatus = true
+        }
+        clearAllCards();
+        displayLibrary();
+        toggleReadStatus();
+    })
+}
+
+function clearAllCards(){
+    while (outputSide.firstChild) {
+        outputSide.removeChild(outputSide.firstChild);
+      }
+}
+
+function displayLibrary(){
+    for (let i = 0; i < libraryArray.length; i++){
+        renderBookCard();
+        addBookObjectDataToBookCard(libraryArray[i]);
+        assignDataAttributeToBookCard(libraryArray[i]);
+        addDeleteButtonToCard();
+    }
+}
+
+function clearForm(){
+    formInputTitle.value = "";
+    formInputAuthor.value = "";
+    formInputPages.value = "";
+}
+
 buttonAddNewBook.addEventListener('click', () => {
     createBook();
     addBookToLibraryArray();
     clearAllCards();
     displayLibrary();
     clearForm();
+    toggleReadStatus();
 });
 
 
