@@ -29,7 +29,7 @@ class Library{
 
     }
     isInLibrary(book){
-        return this.books.some((storedBook) => storedBook.title === book.title) // loops over all storedBook to check if storedBook title is the same as book.title
+        return this.books.some((storedBook) => storedBook.title === book.title) 
     } 
     logBooks(){
         console.table(this.books)
@@ -49,6 +49,7 @@ buttonSubmit.addEventListener('click', ()=>{
     library.addBook(book);
     library.logBooks();
     refreshBookDisplay();
+    clearForm();
 });
 
 function getBookFromInput(){
@@ -107,3 +108,8 @@ function renderAllCards(){
     }
 }
 
+function clearForm(){
+    document.querySelector('#title').value = "";
+    document.querySelector('#author').value = "";
+    document.querySelector('#pages').value = "";
+}
