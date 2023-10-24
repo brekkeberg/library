@@ -1,180 +1,115 @@
-const formInputTitle = document.querySelector("#title");
-const formInputAuthor = document.querySelector("#author");
-const formInputPages = document.querySelector("#pages");
-const formInputReadStatus = document.querySelector("#isRead");
-const buttonAddNewBook = document.querySelector("#buttonSubmit");
-const outputSide = document.querySelector(".outputSide")
 
-let libraryArray = [];
-let bookCard;
-let titleContainer;
-let authorContainer;
-let pagesContainer;
+class Book{
+    constructor (
+        title  = "unknown", 
+        author = "unknown", 
+        pages = 0 , 
+        isRead = false
+        ){
+        this.title = title,
+        this.author = author,
+        this.pages = pages,
+        this.isRead = isRead,
+        this.uniqueID = title + author
+        }
+}
 
-let newBook;
+class Library{
+    constructor(){
+        this.books = []
+    }
+    addBook(book){
+        if (this.isInLibrary(book) === false) {this.books.push(book)
+        } else { alert("you already stored this book") } 
+    } 
+    getBook(book){
 
-class Book {
-    constructor(title, author, pages, readStatus, bookID) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.readStatus = readStatus;
-        this.bookID = bookID;
+    }
+    removeBook(book){ 
+
+    }
+    isInLibrary(book){
+        return this.books.some((storedBook) => storedBook.title === book.title) 
+    } 
+    logBooks(){
+        console.table(this.books)
     }
 }
+//instantiates library object based on library class
+const library = new Library;
 
-function createBook(){
-    newBook = new Book( title = formInputTitle.value,
-                        author = formInputAuthor.value,
-                        pages = formInputPages.value,
-                        readStatus = formInputReadStatus.checked,
-                        bookID = libraryArray.length,
-                        );
+
+
+// PROGRAM FUNCTIONS NOT HOUSED INSIDE LIBRARY CLASS
+const libraryContainer = document.querySelector('.outputSide');
+const buttonSubmit = document.querySelector("#buttonSubmit");
+
+buttonSubmit.addEventListener('click', ()=>{
+    let book = getBookFromInput();
+    library.addBook(book);
+    library.logBooks();
+    refreshBookDisplay();
+    clearForm();
+});
+
+function getBookFromInput(){
+    let title = document.querySelector('#title').value
+    let author = document.querySelector('#author').value
+    let pages = document.querySelector('#pages').value
+    let isRead = document.querySelector('#isRead').checked
+    return new Book(title, author, pages, isRead)
 }
 
-function addBookToLibraryArray(){
-    libraryArray.push(newBook);
-}
+function makeBookCard(book){
+    const bookCard = document.createElement('div');
+    const titleContainer = document.createElement('div');
+    const authorContainer = document.createElement('div');
+    const pagesContainer = document.createElement('div');
+    const isReadContainer = document.createElement('div');
 
-function createBookCard(book){
-
-    // create Book Card
-
-    bookCard = document.createElement('div');
-    bookCard.style.cssText =   "background-color: white;" +
-                                "box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;" +
-                                "padding: 5px 0px 5px 0px;";
-    outputSide.appendChild(bookCard);
-
-
-    titleContainer = document.createElement('div');
-    authorContainer = document.createElement('div');
-    pagesContainer = document.createElement('div');
-    let readStatusContainer = document.createElement('div');
-
+    libraryContainer.appendChild(bookCard);
     bookCard.appendChild(titleContainer);
     bookCard.appendChild(authorContainer);
     bookCard.appendChild(pagesContainer);
-    bookCard.appendChild(readStatusContainer);
+    bookCard.appendChild(isReadContainer);
 
-    readStatusContainer.setAttribute('class','readStatusContainer');
-    readStatusContainer.setAttribute('id','readStatusContainer');
-    titleContainer.setAttribute('id', 'titleContainer')
-    authorContainer.setAttribute('id', 'authorContainer')
-    pagesContainer.setAttribute('id', 'pagesContainer')
-
-    // add Data to bookCard
+    bookCard.setAttribute('id', 'bookCard');
+    isReadContainer.setAttribute('id','isReadContainer');
+    titleContainer.setAttribute('id', 'titleContainer');
+    authorContainer.setAttribute('id', 'authorContainer');
+    pagesContainer.setAttribute('id', 'pagesContainer');
 
     titleContainer.innerText = book.title;
     authorContainer.innerText = book.author;
     if (book.pages != ""){
         pagesContainer.innerText = book.pages + " pages";
     }
-    if (book.readStatus == true){
-        readStatusContainer.innerHTML = "<span>read:  <span class='material-symbols-outlined'>task_alt</span></span>"
+    if (book.isRead == true){
+        isReadContainer.innerHTML = 
+        "<span>read:<span class='material-symbols-outlined'>task_alt</span></span>"
     } else{
-        readStatusContainer.innerHTML = "<span>read:  <span class='material-symbols-outlined'>cancel</span></span>"
+        isReadContainer.innerHTML = 
+        "<span>read:<span class='material-symbols-outlined'>cancel</span></span>"
     }
-
-    // give toggle functionality to readStatus icon
-
-    readStatusContainer.addEventListener('click', ()=>{
-        let currentBookID = readStatusContainer.parentNode.dataset.id;
-            index = locateIndexInLibraryArray(currentBookID);
-            if (libraryArray[index].readStatus == true){
-                libraryArray[index].readStatus = false
-            } else {
-                libraryArray[index].readStatus = true
-            }
-        clearAllCards();
-        displayLibrary();
-    })
 }
 
-function assignDataAttributeToBookCard(book){
-    bookCard.setAttribute('data-ID', book.bookID);
-}
-
-function addDeleteButtonToCard(){
-    let bookCardDeleteButton = document.createElement('button');
-    bookCardDeleteButton.classList.add('deleteButton');
-    bookCard.appendChild(bookCardDeleteButton);
-    bookCardDeleteButton.innerText = "Remove";
-    bookCardDeleteButton.addEventListener('click', ()=>{
-        //removes the correct object from bookArray by locating based on bookID
-        let currentBookID = bookCardDeleteButton.parentNode.dataset.id;
-        index = locateIndexInLibraryArray(currentBookID);
-        libraryArray.splice(index, 1);
-        clearAllCards();
-        displayLibrary();
-    })
-}
-
-function locateIndexInLibraryArray(currentBookID){
-    let index;
-    for (let i = 0; i < libraryArray.length; i++){
-        if (libraryArray[i].bookID == currentBookID){
-            index = i;
-            break;
-        }
-    }
-    return index;
+function refreshBookDisplay(){
+    clearAllCards();
+    renderAllCards();
 }
 
 function clearAllCards(){
-    while (outputSide.firstChild) {
-        outputSide.removeChild(outputSide.firstChild);
-      }
+    libraryContainer.innerHTML = ""
 }
 
-
-function displayLibrary(){
-    for (let i = 0; i < libraryArray.length; i++){
-        createBookCard(libraryArray[i]);
-        assignDataAttributeToBookCard(libraryArray[i]);
-        addDeleteButtonToCard();
-        console.table(libraryArray);
+function renderAllCards(){
+    for (let book of library.books){
+        makeBookCard(book);
     }
 }
 
 function clearForm(){
-    formInputTitle.value = "";
-    formInputAuthor.value = "";
-    formInputPages.value = "";
+    document.querySelector('#title').value = "";
+    document.querySelector('#author').value = "";
+    document.querySelector('#pages').value = "";
 }
-
-buttonAddNewBook.addEventListener('click', () => {
-    createBook();
-    addBookToLibraryArray();
-    clearAllCards();
-    displayLibrary();
-    clearForm();
-});
-
-
-
-/*
-function toggleReadStatus(){
-    let allReadStatusContainers = document.querySelectorAll(".readStatusContainer")
-    for (i = 0; i < allReadStatusContainers.length; i ++){
-        let currentContainer = allReadStatusContainers[i]
-        currentContainer.addEventListener('click', ()=>{
-            let currentBookID = currentContainer.parentNode.dataset.id;
-            index = locateIndexInLibraryArray(currentBookID);
-            if (libraryArray[index].readStatus == true){
-                libraryArray[index].readStatus = false
-            } else {
-                libraryArray[index].readStatus = true
-            }
-            console.log("WORKING")
-            clearAllCards();
-            displayLibrary(); // calls functionality again
-        })
-    }
-}
-*/
-
-
-
-
-
