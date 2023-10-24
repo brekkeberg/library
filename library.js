@@ -25,8 +25,8 @@ class Library{
     getBook(book){
 
     }
-    removeBook(book){ 
-
+    removeBook(book){
+        
     }
     isInLibrary(book){
         return this.books.some((storedBook) => storedBook.title === book.title) 
@@ -37,8 +37,6 @@ class Library{
 }
 //instantiates library object based on library class
 const library = new Library;
-
-
 
 // PROGRAM FUNCTIONS NOT HOUSED INSIDE LIBRARY CLASS
 const libraryContainer = document.querySelector('.outputSide');
@@ -61,36 +59,50 @@ function getBookFromInput(){
 }
 
 function makeBookCard(book){
+    // makes elements
     const bookCard = document.createElement('div');
-    const titleContainer = document.createElement('div');
-    const authorContainer = document.createElement('div');
-    const pagesContainer = document.createElement('div');
-    const isReadContainer = document.createElement('div');
+    const titleContainer = document.createElement('p');
+    const authorContainer = document.createElement('p');
+    const pagesContainer = document.createElement('p');
+    const buttonContainer = document.createElement('div');
+    const buttonIsRead = document.createElement('button');
+    const buttonRemove = document.createElement('button');
 
+    //appends elements
     libraryContainer.appendChild(bookCard);
     bookCard.appendChild(titleContainer);
     bookCard.appendChild(authorContainer);
     bookCard.appendChild(pagesContainer);
-    bookCard.appendChild(isReadContainer);
+    bookCard.appendChild(buttonContainer);
+    buttonContainer.appendChild(buttonIsRead);
+    buttonContainer.appendChild(buttonRemove);
 
+    // sets attributes
     bookCard.setAttribute('id', 'bookCard');
-    isReadContainer.setAttribute('id','isReadContainer');
     titleContainer.setAttribute('id', 'titleContainer');
     authorContainer.setAttribute('id', 'authorContainer');
     pagesContainer.setAttribute('id', 'pagesContainer');
+    buttonContainer.setAttribute('id', 'buttonContainer');
+    buttonIsRead.setAttribute('id', 'buttonIsRead');
+    buttonRemove.setAttribute('id', 'buttonRemove');
 
+
+    // assigns text
     titleContainer.innerText = book.title;
     authorContainer.innerText = book.author;
-    if (book.pages != ""){
-        pagesContainer.innerText = book.pages + " pages";
-    }
-    if (book.isRead == true){
-        isReadContainer.innerHTML = 
-        "<span>read:<span class='material-symbols-outlined'>task_alt</span></span>"
-    } else{
-        isReadContainer.innerHTML = 
-        "<span>read:<span class='material-symbols-outlined'>cancel</span></span>"
-    }
+    if (book.pages != "") {pagesContainer.innerText = `${book.pages} pages`};
+    if (book.isRead === true){
+        buttonIsRead.innerText = "read";
+        buttonIsRead.setAttribute('class', 'isReadTrue');
+    } else { 
+        buttonIsRead.innerText = "not read";
+        buttonIsRead.setAttribute('class', 'isReadFalse');    
+    };
+    buttonRemove.innerText = "remove";
+
+    // gives button functionality
+    buttonIsRead.addEventListener('click', toggleIsRead);
+    buttonRemove.addEventListener('click', removeBook);
 }
 
 function refreshBookDisplay(){
@@ -112,4 +124,12 @@ function clearForm(){
     document.querySelector('#title').value = "";
     document.querySelector('#author').value = "";
     document.querySelector('#pages').value = "";
+}
+
+function toggleIsRead(e){
+    console.log(e)
+    console.log(e.parentNode)
+}
+function removeBook(){
+    console.log("works")
 }
