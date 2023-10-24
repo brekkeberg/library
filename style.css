@@ -12,58 +12,63 @@ body{
 
 /* INPUT SIDE */
 .inputSide{
-    width: 30vw;
     background: #f8f8f8;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
-.inputSide .inputCard{
-    border: 1px solid black;
-    display:flex;
-    flex-direction: column;
-    align-items: left;
-}
-.inputCard .inputCardHeader{
-    flex: 0 0 15%;
+.inputSideHeader{
     font-weight: 500;
     color: black;
     font-size: 50px;
-    align-items: left;
-    justify-content: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: .5vw;
 }
-.inputCard .inputCardMain{
-    flex: 1;
+.inputSideHeader #my{
+    background-color: aquamarine;
+    transform: rotate(10deg);
+    border-radius: 10px;
+}
+.inputSideHeader #library{
+
+}
+.inputSideMain{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: left;
+}
+.inputSideButton{
+
 }
 
 .formContainer{
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 3px;
-    background-color: white;
-    width: 70%;
-    border-bottom: 1px solid black;
+    width: 100%;
     justify-content: left;
     align-items: left;
 }
 
- .inputCardMain #checkboxContainer{
+ .inputSideMain #checkboxContainer{
     border-bottom: 0px;
     background-color: #f8f8f8;
     display: flex;
 }
 
-.inputCardMain #checkboxContainer label{
+.inputSideMain #checkboxContainer label{
     font-size: 17px;
     flex: 0 0 85%;
     margin: auto;
 }
 
-.inputCardMain #checkboxContainer input{
+.inputSideMain #checkboxContainer input{
     flex: 1;
     font-size: 17px;
 }
@@ -79,21 +84,16 @@ input{
 input:focus, 
 input:hover{
     outline:  none;
-    border-bottom: 3px solid orange;
+    border-bottom: 3px solid aquamarine;
     transition: all .2s;
 }
 
 select{
     width: 50px;
 }
-.inputCard .inputCardButton{
-    flex: 0 0 15%;
-    height: 50px;
-    display: 0 0 20%;
-    display: flex;
-    justify-content: left;
-    align-items: left;
-}
+
+/* BUTTONS */ 
+
 button{
     height: 40px;
     width: 100px;
@@ -163,3 +163,10 @@ button:active{
 #readStatusContainer{
     font-size: 20px;
 }
+
+#bookCard{
+    background-color: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 5px 0px 5px 0px;
+
+}  

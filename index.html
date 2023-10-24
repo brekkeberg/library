@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <script src="library.js" defer></script>
+    <script src="library2.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,9 +13,11 @@
 </head>
 <body>
     <div class="inputSide">
-        <div class="inputCard">
-            <header class="inputCardHeader">my library</header>
-            <form class="inputCardMain">
+            <div class="inputSideHeader">
+                <header id="my">my </header>
+                <header id="library">library</header>
+            </div>
+            <form class="inputSideMain">
                 <div class="formContainer">
                     <label for="title"></label>
                     <input  type="text"
@@ -48,7 +50,7 @@
                     <label for="isRead">I have read this book</label>
                 </div>  
             </form>
-            <div class="inputCardButton">
+            <div class="inputSideButton">
                 <button id="buttonSubmit" type="submit" form="formMain">add book</button>
             </div>
         </div>

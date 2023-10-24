@@ -37,6 +37,8 @@ Book.prototype.toggleReadStatus = function(){
 }
 
 
+
+
 function createBook(){
     newBook = new Book( title = formInputTitle.value,
                         author = formInputAuthor.value,
@@ -44,6 +46,8 @@ function createBook(){
                         readStatus = formInputReadStatus.checked,
                         bookID = libraryArray.length,
                         );
+
+    
     
 }
 
@@ -71,6 +75,7 @@ function renderBookCard(){
 
     readStatusContainer.classList.add('readStatusContainer');
     newBook.toggleReadStatus();
+    addBookObjectDataToBookCard();
 }
 
 function addBookObjectDataToBookCard(book){
