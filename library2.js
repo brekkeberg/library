@@ -10,7 +10,7 @@ class Book{
         this.author = author,
         this.pages = pages,
         this.isRead = isRead,
-        this.bookID = title + author + pages
+        this.uniqueID = title + author
         }
 }
 
@@ -19,8 +19,9 @@ class Library{
         this.books = []
     }
     addBook(book){
-        this.books.push(book)
-    }
+        if (this.isInLibrary(book) === false) {this.books.push(book)
+        } else { alert("you already stored this book") } 
+    } 
     getBook(book){
 
     }
@@ -28,8 +29,8 @@ class Library{
 
     }
     isInLibrary(book){
-        
-    }
+        return this.books.some((storedBook) => storedBook.title === book.title) // loops over all storedBook to check if storedBook title is the same as book.title
+    } 
     logBooks(){
         console.table(this.books)
     }
@@ -40,15 +41,15 @@ const library = new Library;
 
 
 // PROGRAM FUNCTIONS NOT HOUSED INSIDE LIBRARY CLASS
+const libraryContainer = document.querySelector('.outputSide');
+const buttonSubmit = document.querySelector("#buttonSubmit");
 
-const buttonSubmit = document.querySelector("#buttonSubmit")
-buttonSubmit.addEventListener('click', addBook)
-
-function addBook(){
+buttonSubmit.addEventListener('click', ()=>{
     let book = getBookFromInput();
     library.addBook(book);
     library.logBooks();
-}
+    refreshBookDisplay();
+});
 
 function getBookFromInput(){
     let title = document.querySelector('#title').value
@@ -57,3 +58,52 @@ function getBookFromInput(){
     let isRead = document.querySelector('#isRead').checked
     return new Book(title, author, pages, isRead)
 }
+
+function makeBookCard(book){
+    const bookCard = document.createElement('div');
+    const titleContainer = document.createElement('div');
+    const authorContainer = document.createElement('div');
+    const pagesContainer = document.createElement('div');
+    const isReadContainer = document.createElement('div');
+
+    libraryContainer.appendChild(bookCard);
+    bookCard.appendChild(titleContainer);
+    bookCard.appendChild(authorContainer);
+    bookCard.appendChild(pagesContainer);
+    bookCard.appendChild(isReadContainer);
+
+    bookCard.setAttribute('id', 'bookCard');
+    isReadContainer.setAttribute('id','isReadContainer');
+    titleContainer.setAttribute('id', 'titleContainer');
+    authorContainer.setAttribute('id', 'authorContainer');
+    pagesContainer.setAttribute('id', 'pagesContainer');
+
+    titleContainer.innerText = book.title;
+    authorContainer.innerText = book.author;
+    if (book.pages != ""){
+        pagesContainer.innerText = book.pages + " pages";
+    }
+    if (book.isRead == true){
+        isReadContainer.innerHTML = 
+        "<span>read:<span class='material-symbols-outlined'>task_alt</span></span>"
+    } else{
+        isReadContainer.innerHTML = 
+        "<span>read:<span class='material-symbols-outlined'>cancel</span></span>"
+    }
+}
+
+function refreshBookDisplay(){
+    clearAllCards();
+    renderAllCards();
+}
+
+function clearAllCards(){
+    libraryContainer.innerHTML = ""
+}
+
+function renderAllCards(){
+    for (let book of library.books){
+        makeBookCard(book);
+    }
+}
+
