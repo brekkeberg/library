@@ -1,11 +1,6 @@
 
 class Book{
-    constructor (
-        title  = "unknown", 
-        author = "unknown", 
-        pages = 0 , 
-        isRead = false
-        ){
+    constructor (title, author, pages, isRead){
         this.title = title,
         this.author = author,
         this.pages = pages,
@@ -31,8 +26,7 @@ class Library{
     modifyBook(currentUniqueID, key, newValue){
         let newKeyValue = {}
         newKeyValue[key] = newValue
-        console.log(newKeyValue)
-        this.books = this.books.map((book) => (book.uniqueID === currentUniqueID ? { ...book, newKeyValue } : book))
+        this.books = this.books.map((book) => (book.uniqueID === currentUniqueID ? { ...book, ...newKeyValue } : book))
     }
     getBookIndex(currentUniqueID){
         return this.books.findIndex((book) => book.uniqueID == currentUniqueID);
@@ -54,7 +48,6 @@ const buttonSubmit = document.querySelector("#buttonSubmit");
 buttonSubmit.addEventListener('click', ()=>{
     let book = getBookFromInput();
     library.addBook(book);
-    library.logBooks();
     refreshBookDisplay();
     clearForm();
 });
@@ -117,6 +110,7 @@ function makeBookCard(book){
 function refreshBookDisplay(){
     clearAllCards();
     renderAllCards();
+    library.logBooks();
 }
 
 function clearAllCards(){
@@ -138,11 +132,14 @@ function clearForm(){
 function toggleIsRead(e){
     const uniqueID = getBookIDFromCard(e);
     const storedBook = library.getBook(uniqueID);
-    // (storedBook.isRead === true) ? storedBook.isRead = false : storedBook.isRead = true;
-    library.modifyBook(uniqueID, "isRead", false);
-    library.logBooks();
-
+    if (storedBook.isRead === true){
+        library.modifyBook(uniqueID, "isRead", false);
+    } else {
+        library.modifyBook(uniqueID, "isRead", true);
+    }
+    refreshBookDisplay();
 }
+
 function removeBook(e){
     const uniqueID = getBookIDFromCard(e);
     library.removeBook(uniqueID);

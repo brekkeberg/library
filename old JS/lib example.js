@@ -1,6 +1,6 @@
 // Data Structures
 
-class Book {
+  class Book {
     constructor(
       title = 'Unknown',
       author = 'Unknown',
