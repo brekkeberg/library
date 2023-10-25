@@ -10,7 +10,7 @@ class Book{
         this.author = author,
         this.pages = pages,
         this.isRead = isRead,
-        this.uniqueID = title + author
+        this.uniqueID = (`${title} - ${author}`).toUpperCase()
         }
 }
 
@@ -20,16 +20,25 @@ class Library{
     }
     addBook(book){
         if (this.isInLibrary(book) === false) {this.books.push(book)
-        } else { alert("you already stored this book") } 
+        } else { alert("You already added this book to your library") } 
     } 
-    getBook(book){
-
+    getBook(currentUniqueID){
+        return this.books.find((storedBook) => storedBook.uniqueID === currentUniqueID)
     }
-    removeBook(book){
-        
+    removeBook(currentUniqueID){
+        this.books = this.books.filter((storedBook) => storedBook.uniqueID !== currentUniqueID)
+    }
+    modifyBook(currentUniqueID, key, newValue){
+        let newKeyValue = {}
+        newKeyValue[key] = newValue
+        console.log(newKeyValue)
+        this.books = this.books.map((book) => (book.uniqueID === currentUniqueID ? { ...book, newKeyValue } : book))
+    }
+    getBookIndex(currentUniqueID){
+        return this.books.findIndex((book) => book.uniqueID == currentUniqueID);
     }
     isInLibrary(book){
-        return this.books.some((storedBook) => storedBook.title === book.title) 
+        return this.books.some((storedBook) => storedBook.uniqueID === book.uniqueID) 
     } 
     logBooks(){
         console.table(this.books)
@@ -127,9 +136,21 @@ function clearForm(){
 }
 
 function toggleIsRead(e){
-    console.log(e)
-    console.log(e.parentNode)
+    const uniqueID = getBookIDFromCard(e);
+    const storedBook = library.getBook(uniqueID);
+    // (storedBook.isRead === true) ? storedBook.isRead = false : storedBook.isRead = true;
+    library.modifyBook(uniqueID, "isRead", false);
+    library.logBooks();
+
 }
-function removeBook(){
-    console.log("works")
+function removeBook(e){
+    const uniqueID = getBookIDFromCard(e);
+    library.removeBook(uniqueID);
+    refreshBookDisplay();
+}
+
+function getBookIDFromCard(e){
+    const title = e.target.parentNode.parentNode.childNodes[0].innerText;
+    const author = e.target.parentNode.parentNode.childNodes[1].innerText;
+    return (`${title} - ${author}`).toUpperCase();
 }
