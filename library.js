@@ -133,9 +133,9 @@ function toggleIsRead(e){
     const uniqueID = getBookIDFromCard(e);
     const storedBook = library.getBook(uniqueID);
     if (storedBook.isRead === true){
-        library.modifyBook(uniqueID, "isRead", false);
+        storedBook.isRead = false;
     } else {
-        library.modifyBook(uniqueID, "isRead", true);
+        storedBook.isRead = true;
     }
     refreshBookDisplay();
 }
